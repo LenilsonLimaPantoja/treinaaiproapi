@@ -1,0 +1,35 @@
+{
+  "name": "treina_ai_pro_api",
+  "version": "1.0.0",
+  "description": "API para gerenciamento do sistema TreinaAi Pro",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [
+    "treino",
+    "academia",
+    "fitness",
+    "api",
+    "nodejs",
+    "express",
+    "workout"
+  ],
+  "author": "Lenilson Lima Pantoja",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "morgan": "^1.10.1",
+    "pg": "^8.18.0",
+    "yup": "^1.7.1"
+  }
+}
