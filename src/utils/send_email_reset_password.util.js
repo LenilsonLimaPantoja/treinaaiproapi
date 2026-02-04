@@ -7,7 +7,11 @@ const sendEmailResetPassword = async (email, token) => {
             user: 'lenilson.pantoja@estudante.ifms.edu.br',
             pass: process.env.EMAIL_APP_PASSWORD
         },
-        tls: { rejectUnauthorized: false }
+        tls: { rejectUnauthorized: false },
+
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 20000,
     });
 
     const mailOptions = {
