@@ -6,6 +6,7 @@ const app = express();
 
 // Importando as rotas
 const usuarioRoutes = require('./src/routes/usuario.routes');
+const passwordResetTokenRoutes = require('./src/routes/password_reset_token.routes');
 
 // Usando o morgan para logs
 app.use(morgan('dev'));
@@ -42,6 +43,7 @@ app.use((req, res, next) => {
 
 // Defina suas rotas e configure o servidor Express
 app.use('/usuarios', usuarioRoutes);
+app.use('/password-reset', passwordResetTokenRoutes);
 
 // Middleware para tratamento de URL não encontrada
 app.use((req, res, next) => {

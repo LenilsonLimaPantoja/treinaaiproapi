@@ -6,9 +6,9 @@ const pool = new Pool({
     host: process.env.PGSQL_HOST,
     port: process.env.PGSQL_PORT,
     database: process.env.PGSQL_DATABASE,
-    // ssl: {
-    //     rejectUnauthorized: false // SSL em produção
-    // }
+    ssl: {
+        rejectUnauthorized: false // SSL em produção
+    }
 });
 
 const executeQuery = async (sql, params = []) => {

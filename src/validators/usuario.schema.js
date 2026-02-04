@@ -1,40 +1,29 @@
 const yup = require('yup');
-const dateTransform = (value, originalValue) => {
-    if (!originalValue) return null;
-    const date = new Date(originalValue);
-    return isNaN(date.getTime()) ? null : date;
-};
 
 const id = yup
     .string()
     .uuid("O usuário é obrigatório e deve ser um UUID válido.")
-    .required("O usuário é obrigatório.");
+    .required("O usuário é obrigatório e deve ser um usuário válido.");
 
 const nome = yup
     .string()
     .trim()
     .min(3, "O nome deve ter no mínimo 3 caracteres.")
     .typeError("O nome é obrigatório e deve ser um nome válido.")
-    .required("O nome é obrigatório.");
+    .required("O nome é obrigatório e deve ter no mínimo 3 caracteres.");
 
 const email = yup
     .string()
     .trim()
     .email("O email deve ser um email válido.")
     .typeError("O email é obrigatório e deve ser um email válido.")
-    .required("O email é obrigatório.");
+    .required("O email é obrigatório e deve ser um email válido.");
 
 const senha = yup
     .string()
-    .min(6, "A senha deve ter no mínimo 6 caracteres.")
+    .min(4, "A senha deve ter no mínimo 4 caracteres.")
     .typeError("A senha é obrigatória e deve ser uma senha válida.")
-    .required("A senha é obrigatória.");
-
-const nascimento = yup
-    .date()
-    .transform(dateTransform)
-    .typeError("A data de nascimento é obrigatória e deve ser uma data válida.")
-    .required("A data de nascimento é obrigatória.");
+    .required("A senha é obrigatória e deve ter no mínimo 4 caracteres.");
 
 const filtro = yup
     .string()
@@ -45,8 +34,7 @@ const filtro = yup
 const schemaCreateUsuario = yup.object({
     nome,
     email,
-    senha,
-    nascimento
+    senha
 });
 
 const schemaUpdateMeUsuario = schemaCreateUsuario.concat(

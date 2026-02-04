@@ -11,7 +11,7 @@ const usuarioService = {
             const usuarioExiste = await Usuarios.readOneSaveMe(data.email);
 
             if (usuarioExiste.length > 0) {
-                return { codigo: 409, mensagem: 'Usuário já existe. Tente novamente.' };
+                return { codigo: 409, mensagem: 'O e-mail já existe para outro usuário. Tente novamente.' };
             }
 
             const hashedSenha = await bcrypt.hash(data.senha, 10);

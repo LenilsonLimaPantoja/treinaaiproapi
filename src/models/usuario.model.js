@@ -1,12 +1,11 @@
 const usuarioRepository = require('../repositories/usuario.repository');
 
-class Usuario {
+class Usuarios {
     constructor(data) {
         this.id = data.id;
         this.nome = data.nome;
         this.email = data.email;
         this.senha = data.senha;
-        this.nascimento = data.nascimento;
         this.created_at = data.created_at;
         this.updated_at = data.updated_at;
     }
@@ -44,4 +43,4 @@ class Usuario {
     }
 }
 
-module.exports = Usuario;
+module.exports = Usuarios;
