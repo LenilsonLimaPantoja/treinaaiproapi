@@ -2,15 +2,16 @@ const nodemailer = require('nodemailer');
 
 const sendEmailResetPassword = async (email, token) => {
     const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // STARTTLS
         auth: {
-            user: 'lenilson.pantoja@estudante.ifms.edu.br',
-            pass: process.env.EMAIL_APP_PASSWORD
+            user: "lenilson.pantoja@estudante.ifms.edu.br",
+            pass: process.env.EMAIL_APP_PASSWORD,
         },
+        requireTLS: true,
         tls: { rejectUnauthorized: false },
-
         connectionTimeout: 10000,
-        greetingTimeout: 10000,
         socketTimeout: 20000,
     });
 

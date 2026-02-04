@@ -9,8 +9,7 @@ const errorUtil = {
 
         return {
             codigo: 500,
-            mensagem: 'Erro interno. Tente novamente.',
-            error: error
+            mensagem: 'Erro interno. Tente novamente.'
         };
     }
 };
