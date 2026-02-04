@@ -71,11 +71,7 @@ exports.updateSenha = async (req, res, next) => {
                 status: 200,
                 mensagem: tokenResult.mensagem
             },
-            registros: [
-                {
-                    id: tokenResult.id,
-                }
-            ]
+            registros: []
         });
     } catch (error) {
         return res.status(500).send({
