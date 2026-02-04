@@ -21,7 +21,8 @@ exports.create = async (req, res, next) => {
             return res.status(token.codigo).send({
                 retorno: {
                     status: token.codigo,
-                    mensagem: token.mensagem
+                    mensagem: token.mensagem,
+                    error: token.error
                 },
                 registros: []
             });
