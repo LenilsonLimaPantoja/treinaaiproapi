@@ -46,7 +46,40 @@ const passwordResetTokenService = {
             return errorUtil.respostaErroService(error);
         }
     },
+    verificaToken: async (token) => {
+        try {
+            const tokenDados = await PasswordResetTokens.verificaToken(token);
 
+            if (tokenDados.length === 0) {
+                return {
+                    codigo: 401,
+                    mensagem: "Token inválido ou não encontrado. Solicite uma nova redefinição de senha e tente novamente."
+                };
+            }
+
+            if (tokenDados[0].used_at) {
+                return {
+                    codigo: 401,
+                    mensagem: "Este token já foi utilizado anteriormente. Por segurança, solicite uma nova redefinição de senha."
+                };
+            }
+
+            if (new Date(tokenDados[0].expires_at) <= new Date()) {
+                return {
+                    codigo: 401,
+                    mensagem: "Token expirado. O prazo de validade foi atingido. Solicite um novo link para redefinir sua senha."
+                };
+            }
+
+            return {
+                codigo: 200,
+                token: tokenDados[0],
+                mensagem: "Token confirmado com sucesso! Agora você pode cadastrar uma nova senha para concluir a alteração."
+            };
+        } catch (error) {
+            return errorUtil.respostaErroService(error);
+        }
+    },
 }
 
 module.exports = passwordResetTokenService;

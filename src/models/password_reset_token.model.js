@@ -18,6 +18,10 @@ class PasswordResetTokens {
     static async readTentativasResetSenha(user_id, request_ip) {
         return await passwordResetTokenRepository.readTentativasResetSenha(user_id, request_ip);
     }
+
+    static async verificaToken(token) {
+        return passwordResetTokenRepository.verificaToken(token);
+    }
 }
 
 module.exports = PasswordResetTokens;

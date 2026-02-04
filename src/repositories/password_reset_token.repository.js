@@ -1,4 +1,5 @@
 const executeQuery = require("../config/pgsql");
+const crypto = require("crypto");
 
 exports.save = async (data) => {
     const columns = Object.keys(data).filter(key => key !== 'id' && key !== 'created_at' && key !== 'used_at');
@@ -37,4 +38,19 @@ exports.readTentativasResetSenha = async (user_id, request_ip) => {
         tentativas_user: Number(row?.tentativas_user ?? 0),
         tentativas_ip: Number(row?.tentativas_ip ?? 0),
     };
+};
+
+exports.verificaToken = async (token) => {
+    const token_hash = crypto.createHash("sha256").update(token).digest("hex");
+
+    const sql = `
+    SELECT id, user_id, expires_at, used_at
+    FROM password_reset_tokens
+    WHERE token_hash = $1
+    LIMIT 1
+  `;
+
+    const result = await executeQuery(sql, [token_hash]);
+
+    return result || [];
 };
