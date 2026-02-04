@@ -3,7 +3,7 @@ const Usuarios = require("../models/usuario.model");
 const errorUtil = require("../utils/error.util");
 const crypto = require("crypto");
 const sendEmailResetPassword = require("../utils/send_email_reset_password.util");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
 const executeQuery = require("../config/pgsql");
 
 const passwordResetTokenService = {
