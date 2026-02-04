@@ -56,14 +56,12 @@ exports.verificaToken = async (req, res) => {
 
         const tokenDados = await passwordResetTokenService.verificaToken(token);
 
-        // ✅ inválido / expirado / usado -> login
         if (tokenDados.codigo !== 200) {
             return res.redirect(
                 `treinaaipro://login?msg=${encodeURIComponent(tokenDados.mensagem)}`
             );
         }
 
-        // ✅ válido -> abrir tela alterar senha
         return res.redirect(
             `treinaaipro://alterar-senha?token=${encodeURIComponent(token)}`
         );
