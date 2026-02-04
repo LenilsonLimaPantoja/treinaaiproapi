@@ -1,24 +1,12 @@
-const nodemailer = require('nodemailer');
+const { Resend } = require("resend");
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmailResetPassword = async (email, token) => {
-    const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: false, // STARTTLS
-        auth: {
-            user: "lenilson.pantoja@estudante.ifms.edu.br",
-            pass: process.env.EMAIL_APP_PASSWORD,
-        },
-        requireTLS: true,
-        tls: { rejectUnauthorized: false },
-        connectionTimeout: 10000,
-        socketTimeout: 20000,
-    });
-
     const mailOptions = {
-        from: 'TreinaAi PRO <lenilson.pantoja@estudante.ifms.edu.br>', // Seu e-mail
-        to: email, // E-mail do destinatário
-        subject: 'Alteração de Senha', // Assunto
+        from: "TreinaAi PRO <onboarding@resend.dev>", // pode trocar depois com domínio
+        to: email,
+        subject: "Alteração de Senha",
         html: `
                 <div style="width: 100%; background-color: #f4f4f4; padding: 40px 0; font-family: Arial, sans-serif;">
                     <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); padding: 30px; text-align: center;">
@@ -39,7 +27,12 @@ const sendEmailResetPassword = async (email, token) => {
             `
     };
 
-    await transporter.sendMail(mailOptions);
+    const result = await resend.emails.send(mailOptions);
+
+    // opcional: se quiser validar erro
+    if (result?.error) throw result.error;
+
+    return result;
 };
 
 module.exports = sendEmailResetPassword;
