@@ -3,7 +3,7 @@ const { Resend } = require("resend");
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendEmailResetPassword = async (email, token) => {
-    const urlReset = `${process.env.APP_URL}/password-reset/${encodeURIComponent(token)}`;
+    const urlReset = `${process.env.APP_URL}/password-reset/validate/${encodeURIComponent(token)}`;
 
     const mailOptions = {
         from: "TreinaAi PRO <onboarding@resend.dev>",

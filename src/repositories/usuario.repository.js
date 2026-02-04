@@ -103,3 +103,11 @@ exports.login = async (usuario, senha) => {
         return { codigo: 401 };
     }
 }
+
+exports.updateSenha = async (senha, usuario_id) => {
+    const sql = `UPDATE usuarios SET senha = $1 WHERE id = $2`;
+
+    await executeQuery(sql, [senha, usuario_id]);
+
+    return usuario_id;
+};

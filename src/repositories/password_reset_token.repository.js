@@ -54,3 +54,12 @@ exports.verificaToken = async (token) => {
 
     return result || [];
 };
+
+
+
+exports.updateTokenResetSenha = async (id) => {
+    const sql = 'UPDATE password_reset_tokens SET used_at = NOW() WHERE id = $1';
+    await executeQuery(sql, [id]);
+
+    return id;
+};

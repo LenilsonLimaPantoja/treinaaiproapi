@@ -50,6 +50,44 @@ exports.create = async (req, res, next) => {
     }
 }
 
+exports.updateSenha = async (req, res, next) => {
+    try {
+        let { token, senha } = req.body;
+
+        const tokenResult = await passwordResetTokenService.updateSenha(token, senha);
+
+        if (tokenResult.codigo !== 200) {
+            return res.status(tokenResult.codigo).send({
+                retorno: {
+                    status: tokenResult.codigo,
+                    mensagem: tokenResult.mensagem
+                },
+                registros: []
+            });
+        }
+
+        return res.status(200).send({
+            retorno: {
+                status: 200,
+                mensagem: tokenResult.mensagem
+            },
+            registros: [
+                {
+                    id: tokenResult.id,
+                }
+            ]
+        });
+    } catch (error) {
+        return res.status(500).send({
+            retorno: {
+                status: 500,
+                mensagem: 'Erro ao atualizar senha. Tente novamente.'
+            },
+            registros: []
+        });
+    }
+}
+
 exports.verificaToken = async (req, res) => {
     try {
         const { token } = req.params;

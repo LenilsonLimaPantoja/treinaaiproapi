@@ -3,6 +3,8 @@ const Usuarios = require("../models/usuario.model");
 const errorUtil = require("../utils/error.util");
 const crypto = require("crypto");
 const sendEmailResetPassword = require("../utils/send_email_reset_password.util");
+const bcrypt = require("bcryptjs");
+const executeQuery = require("../config/pgsql");
 
 const passwordResetTokenService = {
     save: async (data) => {
@@ -77,6 +79,47 @@ const passwordResetTokenService = {
                 mensagem: "Token confirmado com sucesso! Agora você pode cadastrar uma nova senha para concluir a alteração."
             };
         } catch (error) {
+            return errorUtil.respostaErroService(error);
+        }
+    },
+    updateSenha: async (token, senha) => {
+        try {
+            await executeQuery("BEGIN");
+
+            const verificaTokenResposta = await PasswordResetTokens.verificaToken(token);
+
+            if (verificaTokenResposta.length === 0) {
+                await executeQuery("ROLLBACK");
+                return { codigo: 401, mensagem: "Token inválido ou não encontrado. Solicite um novo link e tente novamente." };
+            }
+
+            const row = verificaTokenResposta[0];
+
+            if (row.used_at) {
+                await executeQuery("ROLLBACK");
+                return { codigo: 401, mensagem: "Este token já foi utilizado. Solicite um novo link e tente novamente." };
+            }
+
+            if (new Date(row.expires_at) <= new Date()) {
+                await executeQuery("ROLLBACK");
+                return { codigo: 401, mensagem: "Token expirado. Solicite um novo link e tente novamente." };
+            }
+
+            const senha_hash = await bcrypt.hash(senha, 10);
+
+            await Usuarios.updateSenha(senha_hash, row.user_id);
+            await PasswordResetTokens.updateTokenResetSenha(row.id);
+
+            await executeQuery("COMMIT");
+
+            return {
+                codigo: 200,
+                mensagem: "Senha alterada com sucesso. Você já pode entrar com a nova senha."
+            };
+        } catch (error) {
+            console.log(error);
+            
+            await executeQuery("ROLLBACK");
             return errorUtil.respostaErroService(error);
         }
     },

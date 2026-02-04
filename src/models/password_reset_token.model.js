@@ -22,6 +22,10 @@ class PasswordResetTokens {
     static async verificaToken(token) {
         return passwordResetTokenRepository.verificaToken(token);
     }
+
+    static async updateTokenResetSenha(id) {
+        return passwordResetTokenRepository.updateTokenResetSenha(id);
+    }
 }
 
 module.exports = PasswordResetTokens;

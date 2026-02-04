@@ -41,6 +41,10 @@ class Usuarios {
     static async deleteMe(id) {
         return await usuarioRepository.deleteMe(id);
     }
+
+    static async updateSenha(senha, usuario_id) {
+        return usuarioRepository.updateSenha(senha, usuario_id);
+    }
 }
 
 module.exports = Usuarios;
